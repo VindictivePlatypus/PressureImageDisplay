@@ -200,6 +200,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_pressureimagedisplay.h" />
+    <ClInclude Include="ImageLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="pressureimagedisplay.qrc">

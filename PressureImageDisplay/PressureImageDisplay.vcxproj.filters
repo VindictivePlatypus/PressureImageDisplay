@@ -66,5 +66,8 @@
     <ClInclude Include="GeneratedFiles\ui_pressureimagedisplay.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
+    <ClInclude Include="ImageLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
