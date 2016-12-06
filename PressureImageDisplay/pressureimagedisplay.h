@@ -14,16 +14,19 @@ public:
 	PressureImageDisplay(QWidget *parent = 0);
 	~PressureImageDisplay();
 	void paintFileData();
+	void paintSimuData();
 
 private:
 	Ui::PressureImageDisplayClass ui;
 	std::vector<double> fileData = std::vector<double>(725, 0.);
 	std::vector<double> simData = std::vector<double>(725, 0.);
-	QString path = "";
+	QString path, pathSimu;
 
 public slots:
 	void LoadAndDisplayFile();
 	void PaintNextFrame(int v);
+	void GetSimuFilePath();
+	void ReloadSimuFile();
 };
 
 #endif // PRESSUREIMAGEDISPLAY_H

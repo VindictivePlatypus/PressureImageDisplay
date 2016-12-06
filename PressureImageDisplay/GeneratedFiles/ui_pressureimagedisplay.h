@@ -37,6 +37,9 @@ public:
     QSlider *FrameSlider;
     QLabel *FrameNumDisp;
     QLabel *FilePath;
+    QPushButton *LoadSimuBtton;
+    QLabel *SimuPath;
+    QPushButton *ReloadSimuFile;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -74,6 +77,15 @@ public:
         FilePath = new QLabel(centralWidget);
         FilePath->setObjectName(QStringLiteral("FilePath"));
         FilePath->setGeometry(QRect(20, 680, 491, 16));
+        LoadSimuBtton = new QPushButton(centralWidget);
+        LoadSimuBtton->setObjectName(QStringLiteral("LoadSimuBtton"));
+        LoadSimuBtton->setGeometry(QRect(590, 620, 151, 23));
+        SimuPath = new QLabel(centralWidget);
+        SimuPath->setObjectName(QStringLiteral("SimuPath"));
+        SimuPath->setGeometry(QRect(540, 680, 491, 16));
+        ReloadSimuFile = new QPushButton(centralWidget);
+        ReloadSimuFile->setObjectName(QStringLiteral("ReloadSimuFile"));
+        ReloadSimuFile->setGeometry(QRect(810, 620, 141, 23));
         PressureImageDisplayClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(PressureImageDisplayClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -101,6 +113,9 @@ public:
         SimulationData->setText(QString());
         FrameNumDisp->setText(QApplication::translate("PressureImageDisplayClass", "Frame:0", 0));
         FilePath->setText(QApplication::translate("PressureImageDisplayClass", "Path", 0));
+        LoadSimuBtton->setText(QApplication::translate("PressureImageDisplayClass", "Get Simulation File", 0));
+        SimuPath->setText(QApplication::translate("PressureImageDisplayClass", "Path", 0));
+        ReloadSimuFile->setText(QApplication::translate("PressureImageDisplayClass", "Reload Simulation Frame", 0));
     } // retranslateUi
 
 };

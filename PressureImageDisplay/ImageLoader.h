@@ -7,10 +7,11 @@
 #include <iostream>
 
 static std::vector<std::vector<double>> currentImage = std::vector<std::vector<double>>();
+static std::vector<double> currentImageSim =std::vector<double>();
 
 static std::ifstream* istream;
 
-static int indexes[362] = {
+static int indexes[361] = {
 	522,523,524,525,547,548,549,550,572,573,574,575,397,398,399,400,422,423,424,425,447,448,449,450,472,473,474,475,
 	241,242,243,244,266,267,268,269,291,292,293,294,141,142,143,144,166,167,168,169,191,192,193,194,16,17,18,19,41,42,43,44,66,67,68,69,91,92,93,94,
 	236,237,238,239,261,262,263,264,286,287,288,289,136,137,138,139,161,162,163,164,186,187,188,189,11,12,13,14,36,37,38,39,61,62,63,64,86,87,88,89,
@@ -47,6 +48,18 @@ static std::vector<double> LoadFile(const std::string path, int* s) {
 	}
 	*s = currentImage.size()-1;
 	return NextImage(0);
+}
+
+static std::vector<double> readDataFromSim(std::string path) {
+	istream = new std::ifstream(path);
+	std::string currString = "";
+	currentImageSim.clear();
+	for (int i = 1; i < 726; i++) {
+		*istream >> currString;
+		if (std::find(std::begin(indexes), std::end(indexes), i) == std::end(indexes)) currentImageSim.push_back(-0.01);
+		else currentImageSim.push_back(atof(currString.c_str()));
+	}
+	return currentImageSim;
 }
 
 
