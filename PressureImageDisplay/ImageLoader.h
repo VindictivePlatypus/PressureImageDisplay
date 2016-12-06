@@ -51,13 +51,18 @@ static std::vector<double> LoadFile(const std::string path, int* s) {
 }
 
 static std::vector<double> readDataFromSim(std::string path) {
+	char file[6525];
 	istream = new std::ifstream(path);
-	std::string currString = "";
+	istream->read(file,6525);
+	istream->close();
+	std::string currString(file);
+	if (currString.length() != 6525) return currentImageSim;
 	currentImageSim.clear();
 	for (int i = 1; i < 726; i++) {
-		*istream >> currString;
+		double num = std::stod(currString.substr(0, currString.find(" ")));
+		currString.erase(0, currString.find(" ")+1);
 		if (std::find(std::begin(indexes), std::end(indexes), i) == std::end(indexes)) currentImageSim.push_back(-0.01);
-		else currentImageSim.push_back(atof(currString.c_str()));
+		else currentImageSim.push_back(num);
 	}
 	return currentImageSim;
 }

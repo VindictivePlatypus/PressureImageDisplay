@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
@@ -39,7 +40,7 @@ public:
     QLabel *FilePath;
     QPushButton *LoadSimuBtton;
     QLabel *SimuPath;
-    QPushButton *ReloadSimuFile;
+    QCheckBox *UpdateSimuCheckbox;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -83,9 +84,12 @@ public:
         SimuPath = new QLabel(centralWidget);
         SimuPath->setObjectName(QStringLiteral("SimuPath"));
         SimuPath->setGeometry(QRect(540, 680, 491, 16));
-        ReloadSimuFile = new QPushButton(centralWidget);
-        ReloadSimuFile->setObjectName(QStringLiteral("ReloadSimuFile"));
-        ReloadSimuFile->setGeometry(QRect(810, 620, 141, 23));
+        UpdateSimuCheckbox = new QCheckBox(centralWidget);
+        UpdateSimuCheckbox->setObjectName(QStringLiteral("UpdateSimuCheckbox"));
+        UpdateSimuCheckbox->setEnabled(true);
+        UpdateSimuCheckbox->setGeometry(QRect(810, 620, 141, 17));
+        UpdateSimuCheckbox->setCheckable(true);
+        UpdateSimuCheckbox->setChecked(false);
         PressureImageDisplayClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(PressureImageDisplayClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -115,7 +119,7 @@ public:
         FilePath->setText(QApplication::translate("PressureImageDisplayClass", "Path", 0));
         LoadSimuBtton->setText(QApplication::translate("PressureImageDisplayClass", "Get Simulation File", 0));
         SimuPath->setText(QApplication::translate("PressureImageDisplayClass", "Path", 0));
-        ReloadSimuFile->setText(QApplication::translate("PressureImageDisplayClass", "Reload Simulation Frame", 0));
+        UpdateSimuCheckbox->setText(QApplication::translate("PressureImageDisplayClass", "Update Simulation Data", 0));
     } // retranslateUi
 
 };

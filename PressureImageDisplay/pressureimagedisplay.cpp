@@ -7,7 +7,25 @@ PressureImageDisplay::PressureImageDisplay(QWidget *parent)
 	QObject::connect(ui.LoadFileButton, SIGNAL(clicked()),this, SLOT(LoadAndDisplayFile()));
 	QObject::connect(ui.FrameSlider, SIGNAL(valueChanged(int)), this, SLOT(PaintNextFrame(int)));
 	QObject::connect(ui.LoadSimuBtton, SIGNAL(clicked()), this, SLOT(GetSimuFilePath()));
-	QObject::connect(ui.ReloadSimuFile, SIGNAL(clicked()), this, SLOT(ReloadSimuFile()));
+	QObject::connect(timer, SIGNAL(timeout()), this, SLOT(CheckIfModified()));
+	QObject::connect(ui.UpdateSimuCheckbox, SIGNAL(toggled(bool)), this, SLOT(ToggleUpdateSimu(bool)));
+
+	timer->setInterval(33);
+	timer->setSingleShot(false);
+	/*
+	HANDLE pipe = CreateFile(
+		L"\\\\.\\pipe\\my_pipe",
+		GENERIC_READ, // only need read access
+		FILE_SHARE_READ | FILE_SHARE_WRITE,
+		NULL,
+		OPEN_EXISTING,
+		FILE_ATTRIBUTE_NORMAL,
+		NULL
+		);
+	DWORD mode = PIPE_READMODE_MESSAGE;
+	SetNamedPipeHandleState(pipe, &mode, NULL, NULL);
+	mode = PIPE_NOWAIT;
+	SetNamedPipeHandleState(pipe, &mode, NULL, NULL);*/
 }
 
 PressureImageDisplay::~PressureImageDisplay()
@@ -46,7 +64,7 @@ void PressureImageDisplay::paintFileData() {
 			QColor c = getColor(fileData[i * 25 + j],max);
 			for (int k1 = 0; k1 < 20; k1++) {
 				for (int k2 = 0; k2 < 20; k2++) {
-					img.setPixelColor(j*20 + k1, i*20 + k2, c);
+					img.setPixelColor(500-(j*20 + k1), i*20 + k2, c);
 				}
 			}			
 		}
@@ -70,7 +88,7 @@ void PressureImageDisplay::paintSimuData() {
 			QColor c = getColor(simData[i * 25 + j], max);
 			for (int k1 = 0; k1 < 20; k1++) {
 				for (int k2 = 0; k2 < 20; k2++) {
-					img.setPixelColor(j * 20 + k1, i * 20 + k2, c);
+					img.setPixelColor(499 - (j * 20 + k1), i * 20 + k2, c);
 				}
 			}
 		}
@@ -81,10 +99,46 @@ void PressureImageDisplay::paintSimuData() {
 
 void PressureImageDisplay::GetSimuFilePath() {
 	pathSimu = QFileDialog::getOpenFileName(ui.centralWidget, "Choose File", "");
+	ui.SimuPath->setText(pathSimu);
+
+	QFileInfo simuInfo(pathSimu);
+	lastModif = simuInfo.lastModified();
+
+	timer->start();
+	ui.UpdateSimuCheckbox->setEnabled(true);
+
 	ReloadSimuFile();
 }
 
 void PressureImageDisplay::ReloadSimuFile() {
 	simData = readDataFromSim(pathSimu.toStdString());
 	paintSimuData();
+}
+
+void PressureImageDisplay::CheckIfModified() {
+	QFileInfo simuInfo(pathSimu);
+
+	if (lastModif < simuInfo.lastModified()) {
+		lastModif = simuInfo.lastModified();
+		ReloadSimuFile();
+	}
+}
+
+void PressureImageDisplay::ToggleUpdateSimu(bool u) {
+	if (u) {
+		timer->start();
+	}
+	else {
+		timer->stop();
+	}
+}
+
+void PressureImageDisplay::ReceiveMessage() {
+	double truc[725];
+	ReadFile(pipe,
+		truc,
+		sizeof(truc),
+		NULL,
+		NULL);
+	simData = std::vector<double>(std::begin(truc), std::end(truc));
 }

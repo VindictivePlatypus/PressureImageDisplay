@@ -147,17 +147,26 @@
      <string>Path</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="ReloadSimuFile">
+   <widget class="QCheckBox" name="UpdateSimuCheckbox">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>810</x>
       <y>620</y>
       <width>141</width>
-      <height>23</height>
+      <height>17</height>
      </rect>
     </property>
     <property name="text">
-     <string>Reload Simulation Frame</string>
+     <string>Update Simulation Data</string>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
     </property>
    </widget>
   </widget>
