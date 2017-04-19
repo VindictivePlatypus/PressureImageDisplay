@@ -61,8 +61,8 @@ void PressureImageDisplay::paintFileData() {
 	}
 	for (int i = 0; i < 29; i++) {
 		for (int j = 0; j < 25; j++) {
-			QColor c = getColor(fileData[i * 25 + j],max);
-			for (int k1 = 0; k1 < 20; k1++) {
+			QColor c = getColor(fileData[i * 25 + j]);
+			for (int k1 = 1; k1 < 21; k1++) {
 				for (int k2 = 0; k2 < 20; k2++) {
 					img.setPixelColor(500-(j*20 + k1), i*20 + k2, c);
 				}

@@ -69,9 +69,9 @@ static std::vector<double> readDataFromSim(std::string path) {
 
 
 
-static QColor getColor(double value, double max = 0.8) {
+static QColor getColor(double value, double m = 0.5) {
 	//We want to match the interval of value 0->0.8 to the interval of angle 180°->0° to get a color going from cyan to red
-	int hue = (int)(180 - (value / max) * 180);
+	int hue = std::max(0, (int)(180 - (value / m) * 180));
 	int light;
 	value < 0 ? light = 255 : light = 128;
 	return QColor::fromHsl(hue, 255, light);
